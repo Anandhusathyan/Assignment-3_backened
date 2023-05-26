@@ -54,7 +54,7 @@ Routes.post("/editoffer", requireAuth, async (req, res) => {
                 console.log("pricing",`Offers.pricing[0].${prop}`)
                 const updatevalue = await full_details.
                 updateOne({ _id: sele_obj.id }, 
-                    { $set: { [`Offers.pricing[0].${prop}`]: Number(sele_obj[prop]) } }).then(data=>console.log(data)).
+                    { $set: { [`Offers.pricing.$[].${prop}`]: Number(sele_obj[prop]) } }).then(data=>console.log(data)).
                     catch(error=>console.log(error))
             }
 
@@ -63,7 +63,7 @@ Routes.post("/editoffer", requireAuth, async (req, res) => {
                 console.log("target")
                 const updatevalue = await full_details.
                 updateOne({ _id: sele_obj.id }, 
-                    { $set: { [`Offers.target[0].${prop}`]: sele_obj[prop] } }).then(data=>console.log(data)).
+                    { $set: { [`Offers.target.$[].${prop}`]: sele_obj[prop] } }).then(data=>console.log(data)).
                     catch(error=>console.log(error))
             }
 
@@ -72,8 +72,8 @@ Routes.post("/editoffer", requireAuth, async (req, res) => {
                 console.log("content")
                 const updatevalue = await full_details.
                 updateOne({ _id: sele_obj.id }, 
-                    { $set: { "Offers.content.$[elem].item_id": sele_obj[prop] } },
-                    { arrayFilters: [{ "elem.item_id": sele_obj[prop] }] }
+                    { $set: { [`Offers.content.$[].${prop}`] : sele_obj[prop] } }
+                    // { arrayFilters: [{ "elem.item_id": sele_obj[prop] }] }
                     // { $set: { [`Offers.content.$[elem].${prop}`]: sele_obj[prop] } },
                     // { arrayFilters: [{ [`elem.${prop}`] : sele_obj.prop }] }
                     /*{ $set: { [`Offers.content${[0]}.${prop}`]: sele_obj[prop] } }*/ ).then(data=>console.log(data)).
